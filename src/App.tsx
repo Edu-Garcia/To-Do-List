@@ -21,6 +21,10 @@ const App = () => {
     console.log(finishedTask);
   }
 
+  const deleteTask = (deletedTask: ITask) => {
+    setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id));
+  }
+
   return (
     <div className="App">
       <div className="formContainer">
@@ -61,6 +65,7 @@ const App = () => {
           <List
             tasks={tasks}
             finishTask={finishTask}
+            deleteTask={deleteTask}
             pendantFilter={pendantFilter}
             finishedFilter={finishedFilter}
           />

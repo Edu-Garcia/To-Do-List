@@ -5,11 +5,12 @@ import { Task } from "./Task";
 interface IList {
   tasks: ITask[];
   finishTask: (task: ITask) => void;
+  deleteTask: (task: ITask) => void;
   pendantFilter: boolean;
   finishedFilter: boolean;
 }
 
-export const List = ({ tasks, finishTask, pendantFilter, finishedFilter }: IList) => {
+export const List = ({ tasks, finishTask, deleteTask, pendantFilter, finishedFilter }: IList) => {
 
   let localTasks = tasks;
 
@@ -21,23 +22,22 @@ export const List = ({ tasks, finishTask, pendantFilter, finishedFilter }: IList
     localTasks = tasks.filter(task => task.finished);
   }
 
-  if (localTasks.length) {
-    return (
+  return (
+    (localTasks.length && (
       <ul>
         {localTasks.map(task => (
           <Task
             finishTask={finishTask}
+            deleteTask={deleteTask}
             key={task.id}
             {...task}
           />
         ))}
       </ul>
-    )
-  } else {
-    return (
+    )) || (
       <div className="emptyList">
         <h2>Nenhuma tarefa encontrada</h2>
       </div>
     )
-  }
+  );
 }
