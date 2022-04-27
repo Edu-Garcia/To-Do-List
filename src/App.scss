@@ -1,0 +1,78 @@
+.App {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+
+  ::-webkit-scrollbar-track {
+    background-color: #F4F4F4;
+  }
+  ::-webkit-scrollbar {
+      background: #F4F4F4;
+  }
+  ::-webkit-scrollbar-thumb {
+      background: #dad7d7;
+      border: 4px solid #fff;
+  }
+
+  h2 {
+    padding: 1rem;
+    color: #000;
+  }
+
+  .formContainer {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #CCCCCC;
+    box-shadow: inset 1px 1px 5px #000;
+
+    > div {
+      background-color: #fff;
+      padding: 2rem;
+      border: 1px solid #000;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+
+  .tasksContainer {
+    width: 60%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid #000;
+    padding: 2rem;
+
+    .list {
+      width: 100%;
+      height: 90%;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .buttonsContainer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .quantityContainer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+  }
+}

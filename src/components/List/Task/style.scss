@@ -1,0 +1,15 @@
+li {
+  width: 100%;
+  list-style: none;
+  border: 1px solid #000;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  .textContainer {
+    width: 100%;
+  }
+}
