@@ -1,23 +1,34 @@
 import './style.scss';
-import { ITask } from "../../../types/task";
+import { ITask } from "../../../interfaces/ITask";
 import { Button } from '../../Button';
 
 interface PropsTask extends ITask {
-  finishTask: (task: ITask) => void;
+  completeTask: (task: ITask) => void;
   deleteTask: (task: ITask) => void;
+  editTask: (task: ITask) => void;
 }
 
 export const Task = (props: PropsTask) => {
-  const { title, description, finished, finishTask, deleteTask } = props;
+  const {
+    title,
+    description,
+    complete,
+    completeTask,
+    deleteTask,
+    editTask
+  } = props;
 
   return (
-    <li className={finished ? 'selectedTask' : ''}>
+    <li className={complete ? 'selectedTask' : ''}>
       <div className="textContainer">
         <h3>{title}</h3>
         <span>{description}</span>
       </div>
-      {!finished && (
-        <Button onClick={() => finishTask(props)}>Concluir</Button>
+      {!complete && (
+        <>
+          <Button onClick={() => completeTask(props)}>Concluir</Button>
+          <Button className="edit" onClick={() => editTask(props)}>Editar</Button>
+        </>
       )}
       <Button className="delete" onClick={() => deleteTask(props)}>Excluir</Button>
     </li>

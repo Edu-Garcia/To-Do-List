@@ -1,25 +1,26 @@
 import './style.scss';
-import { ITask } from "../../types/task";
+import { ITask } from "../../interfaces/ITask";
 import { Task } from "./Task";
 
 interface IList {
   tasks: ITask[];
-  finishTask: (task: ITask) => void;
+  completeTask: (task: ITask) => void;
   deleteTask: (task: ITask) => void;
+  editTask: (task: ITask) => void;
   pendantFilter: boolean;
-  finishedFilter: boolean;
+  completeFilter: boolean;
 }
 
-export const List = ({ tasks, finishTask, deleteTask, pendantFilter, finishedFilter }: IList) => {
+export const List = ({ tasks, completeTask, deleteTask, editTask, pendantFilter, completeFilter }: IList) => {
 
   let localTasks = tasks;
 
   if (pendantFilter) {
-    localTasks = tasks.filter(task => !task.finished);
+    localTasks = tasks.filter(task => !task.complete);
   }
 
-  if (finishedFilter) {
-    localTasks = tasks.filter(task => task.finished);
+  if (completeFilter) {
+    localTasks = tasks.filter(task => task.complete);
   }
 
   return (
@@ -27,8 +28,9 @@ export const List = ({ tasks, finishTask, deleteTask, pendantFilter, finishedFil
       <ul>
         {localTasks.map(task => (
           <Task
-            finishTask={finishTask}
+            completeTask={completeTask}
             deleteTask={deleteTask}
+            editTask={editTask}
             key={task.id}
             {...task}
           />

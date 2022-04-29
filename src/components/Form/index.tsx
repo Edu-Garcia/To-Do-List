@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "../Button";
-import { ITask } from '../../types/task';
-import { v4 as uuid } from 'uuid';
+import { ITask } from '../../interfaces/ITask';
 import './style.scss';
+import api from '../../config/api';
 
 interface IForm {
   setTasks: React.Dispatch<React.SetStateAction<ITask[]>>
@@ -10,36 +10,45 @@ interface IForm {
 
 export const Form = ({ setTasks }: IForm) => {
 
-  const [task, setTask] = React.useState<ITask>({
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [task, setTask] = useState<ITask>({
+    id: '',
     title: '',
     description: '',
-    selected: false,
-    finished: false,
-    id: ''
+    complete: false,
   });
 
-  const newTask = (e: React.FormEvent<HTMLFormElement>) => {
+  const newTask = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
+
     e.preventDefault();
 
-    const { title, description } = task;
+    const { title } = task;
 
-    const defaultDescription = 'Sem descrição';
+    const description = task.description ? task.description : 'Sem descrição';
 
-    setTasks(tasks => [...tasks, {
-      title,
-      description: description || defaultDescription,
-      selected: false,
-      finished: false,
-      id: uuid(),
-    }]);
+    await api.post('todos', { title, description })
+      .then(res => {
+        console.log(res)
+        setTasks(tasks => [...tasks, res.data]);
+      });
+
+    // setTasks(tasks => [...tasks, {
+    //   id: uuid(),
+    //   title,
+    //   description,
+    //   complete: false,
+    // }]);
 
     setTask({
+      id: '',
       title: '',
       description: '',
-      selected: false,
-      finished: false,
-      id: ''
+      complete: false,
     });
+
+    setIsLoading(false);
   }
 
   return (
@@ -67,7 +76,12 @@ export const Form = ({ setTasks }: IForm) => {
           onChange={(e) => setTask({ ...task, description: e.target.value })}
         />
       </div>
-      <Button type="submit">Enviar</Button>
+      <Button
+        type="submit"
+        disabled={isLoading}
+      >
+        {!isLoading ? 'Enviar' : 'Carregando...'}
+      </Button>
     </form>
   );
 }
