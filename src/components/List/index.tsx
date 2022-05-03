@@ -6,16 +6,15 @@ interface IList {
   tasks: ITask[];
   completeTask: (task: ITask) => void;
   deleteTask: (task: ITask) => void;
-  editTask: (task: ITask) => void;
-  pendantFilter: boolean;
+  pendingFilter: boolean;
   completeFilter: boolean;
 }
 
-export const List = ({ tasks, completeTask, deleteTask, editTask, pendantFilter, completeFilter }: IList) => {
+export const List = ({ tasks, completeTask, deleteTask, pendingFilter, completeFilter }: IList) => {
 
   let localTasks = tasks;
 
-  if (pendantFilter) {
+  if (pendingFilter) {
     localTasks = tasks.filter(task => !task.complete);
   }
 
@@ -30,7 +29,6 @@ export const List = ({ tasks, completeTask, deleteTask, editTask, pendantFilter,
           <Task
             completeTask={completeTask}
             deleteTask={deleteTask}
-            editTask={editTask}
             key={task.id}
             {...task}
           />

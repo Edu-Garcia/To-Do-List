@@ -21,7 +21,7 @@ const App = () => {
       })
   }, []);
 
-  const [pendantFilter, setPendantFilter] = useState<boolean>(false);
+  const [pendingFilter, setPendantFilter] = useState<boolean>(false);
   const [completeFilter, setCompleteFilter] = useState<boolean>(false);
 
   const completeTask = async (completeTask: ITask) => {
@@ -43,14 +43,15 @@ const App = () => {
       .catch(err => console.log(err));
   }
 
-  const editTask = async (editTask: ITask) => {
-    await api.put(`todos/${editTask.id}`)
-      .then(() => {
-        setTasks(tasks => tasks.map(task => {
-          return task.id === editTask.id ? editTask : task;
-        }));
-      })
-      .catch(err => console.log(err));
+  const deleteAll = async (tasks: ITask[]) => {
+
+    tasks.forEach(async task => {
+      await api.delete(`todos/${task.id}`)
+        .then(result => console.log(result.status))
+        .catch(err => console.log(err));
+    })
+
+    setTasks([]);
   }
 
   return (
@@ -66,10 +67,10 @@ const App = () => {
         <div className="buttonsContainer">
           <Button
             onClick={() => {
-              setPendantFilter(!pendantFilter)
+              setPendantFilter(!pendingFilter)
               setCompleteFilter(false)
             }}
-            className={`filter${pendantFilter ? '-selected' : ''}`}
+            className={`filter${pendingFilter ? '-selected' : ''}`}
           >
             Filtrar Pendentes
           </Button>
@@ -82,7 +83,7 @@ const App = () => {
           >
             Filtrar Concluídas
           </Button>
-          <Button className="delete" onClick={() => setTasks([])}>Excluir todas</Button>
+          <Button className="delete" onClick={() => deleteAll(tasks)}>Excluir todas</Button>
         </div>
         <div className="quantityContainer">
           <p>
@@ -100,8 +101,7 @@ const App = () => {
             tasks={tasks}
             completeTask={completeTask}
             deleteTask={deleteTask}
-            editTask={editTask}
-            pendantFilter={pendantFilter}
+            pendingFilter={pendingFilter}
             completeFilter={completeFilter}
           />
         </div>
