@@ -4,51 +4,49 @@ import { Button } from './components/Button';
 import { Form } from "./components/Form";
 import { List } from './components/List';
 import { ITask } from './interfaces/ITask';
-import api from './config/api';
+import TodoService from './services/todo.service';
 
 const App = () => {
 
   const [tasks, setTasks] = useState<ITask[]>([]);
 
   useEffect(() => {
-    api.get('todos/')
-      .then(res => {
-        console.log(res);
-        setTasks(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    TodoService.todos()
+      .then(tasks => setTasks(tasks))
+      .catch(err => console.log(err))
   }, []);
 
   const [pendingFilter, setPendantFilter] = useState<boolean>(false);
   const [completeFilter, setCompleteFilter] = useState<boolean>(false);
 
-  const completeTask = async (completeTask: ITask) => {
-    console.log(completeTask);
+  const addTask = async (title: string, description: string) => {
+    const data = await TodoService.create(title, description);
+    setTasks(tasks => [...tasks, data]);
+  }
 
-    await api.put(`todos/${completeTask.id}`, { complete: true })
-      .then(() => {
-        setTasks(tasks => tasks.map(task => ({
-          ...task,
-          complete: task.id === completeTask.id ? true : task.complete
-        })));
-      })
-      .catch(err => console.log(err));
+  const completeTask = async (completeTask: ITask) => {
+    const status = await TodoService.update(completeTask.id)
+
+    if (status === 204) {
+      setTasks(tasks => tasks.map(task => ({
+        ...task,
+        complete: task.id === completeTask.id ? true : task.complete
+      })));
+    }
   }
 
   const deleteTask = async (deletedTask: ITask) => {
-    await api.delete(`todos/${deletedTask.id}`)
-      .then(() => setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id)))
-      .catch(err => console.log(err));
+    const status = await TodoService.delete(deletedTask.id)
+
+    if (status === 204) {
+      setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id))
+    }
   }
 
   const deleteAll = async (tasks: ITask[]) => {
 
     tasks.forEach(async task => {
-      await api.delete(`todos/${task.id}`)
-        .then(result => console.log(result.status))
-        .catch(err => console.log(err));
+      await TodoService.delete(task.id)
     })
 
     setTasks([]);
@@ -59,7 +57,7 @@ const App = () => {
       <div className="formContainer">
         <div>
           <h2>Adicione uma nova tarefa</h2>
-          <Form setTasks={setTasks} />
+          <Form addTask={addTask} />
         </div>
       </div>
       <div className="tasksContainer">

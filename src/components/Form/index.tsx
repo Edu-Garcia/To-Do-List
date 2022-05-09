@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { Button } from "../Button";
 import { ITask } from '../../interfaces/ITask';
 import './style.scss';
-import api from '../../config/api';
 
 interface IForm {
-  setTasks: React.Dispatch<React.SetStateAction<ITask[]>>
+  addTask: (title: string, description: string) => void;
 }
 
-export const Form = ({ setTasks }: IForm) => {
+export const Form = ({ addTask }: IForm) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -19,7 +18,7 @@ export const Form = ({ setTasks }: IForm) => {
     complete: false,
   });
 
-  const newTask = async (e: React.FormEvent<HTMLFormElement>) => {
+  const newTask = (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
 
     e.preventDefault();
@@ -28,18 +27,13 @@ export const Form = ({ setTasks }: IForm) => {
 
     const description = task.description ? task.description : 'Sem descrição';
 
-    await api.post('todos', { title, description })
-      .then(res => {
-        console.log(res)
-        setTasks(tasks => [...tasks, res.data]);
-      });
+    addTask(title, description);
 
-    // setTasks(tasks => [...tasks, {
-    //   id: uuid(),
-    //   title,
-    //   description,
-    //   complete: false,
-    // }]);
+    // await api.post('todos', { title, description })
+    //   .then(res => {
+    //     console.log(res)
+    //     setTasks(tasks => [...tasks, res.data]);
+    //   });
 
     setTask({
       id: '',
