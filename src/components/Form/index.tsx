@@ -4,7 +4,7 @@ import { ITask } from '../../interfaces/ITask';
 import './style.scss';
 
 interface IForm {
-  addTask: (title: string, description: string) => void;
+  addTask: (title: string, description: string) => Promise<void>;
 }
 
 export const Form = ({ addTask }: IForm) => {
@@ -18,7 +18,7 @@ export const Form = ({ addTask }: IForm) => {
     complete: false,
   });
 
-  const newTask = (e: React.FormEvent<HTMLFormElement>) => {
+  const newTask = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
 
     e.preventDefault();
@@ -27,13 +27,7 @@ export const Form = ({ addTask }: IForm) => {
 
     const description = task.description ? task.description : 'Sem descrição';
 
-    addTask(title, description);
-
-    // await api.post('todos', { title, description })
-    //   .then(res => {
-    //     console.log(res)
-    //     setTasks(tasks => [...tasks, res.data]);
-    //   });
+    await addTask(title, description);
 
     setTask({
       id: '',

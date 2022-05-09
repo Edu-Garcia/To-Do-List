@@ -20,8 +20,12 @@ const App = () => {
   const [completeFilter, setCompleteFilter] = useState<boolean>(false);
 
   const addTask = async (title: string, description: string) => {
-    const data = await TodoService.create(title, description);
-    setTasks(tasks => [...tasks, data]);
+    try {
+      const data = await TodoService.create(title, description);
+      setTasks(tasks => [...tasks, data]);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const completeTask = async (completeTask: ITask) => {
