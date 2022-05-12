@@ -12,7 +12,7 @@ export const Button = ({ children, type = 'button', className, onClick, disabled
   return (
     <button
       type={type}
-      className={className}
+      className={`button ${className}`}
       onClick={onClick}
       disabled={disabled}
     >

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import './App.scss';
 import { Button } from './components/Button';
 import { Form } from "./components/Form";
@@ -23,37 +24,60 @@ const App = () => {
     try {
       const data = await TodoService.create(title, description);
       setTasks(tasks => [...tasks, data]);
-    } catch (error) {
+      toast.success('Tarefa adicionada com sucesso!');
+    } catch (error: any) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   }
 
   const completeTask = async (completeTask: ITask) => {
-    const status = await TodoService.update(completeTask.id)
+    try {
+      const status = await TodoService.complete(completeTask.id)
 
-    if (status === 204) {
-      setTasks(tasks => tasks.map(task => ({
-        ...task,
-        complete: task.id === completeTask.id ? true : task.complete
-      })));
+      if (status === 200) {
+        setTasks(tasks => tasks.map(task => ({
+          ...task,
+          complete: task.id === completeTask.id ? true : task.complete
+        })));
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Ocorreu um erro ao concluir a tarefa!');
     }
   }
 
   const deleteTask = async (deletedTask: ITask) => {
-    const status = await TodoService.delete(deletedTask.id)
+    try {
+      const { data, status } = await TodoService.delete(deletedTask.id)
 
-    if (status === 204) {
-      setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id))
+      console.log(data);
+
+      if (status === 200) {
+        setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id))
+        toast.success('Tarefa escluída com sucesso!');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Ocorreu um erro ao excluir a tarefa!');
     }
+
   }
 
-  const deleteAll = async (tasks: ITask[]) => {
+  const deleteAll = async () => {
+    try {
+      const { data, status } = await TodoService.deleteAll()
 
-    tasks.forEach(async task => {
-      await TodoService.delete(task.id)
-    })
+      console.log(data);
 
-    setTasks([]);
+      if (status === 200) {
+        setTasks([]);
+        toast.success('Tarefas escluídas com sucesso!');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Ocorreu um erro ao excluir as tarefas!');
+    }
   }
 
   return (
@@ -85,7 +109,12 @@ const App = () => {
           >
             Filtrar Concluídas
           </Button>
-          <Button className="delete" onClick={() => deleteAll(tasks)}>Excluir todas</Button>
+          <Button
+            className="delete"
+            onClick={() => deleteAll()}
+          >
+            Excluir todas
+          </Button>
         </div>
         <div className="quantityContainer">
           <p>
