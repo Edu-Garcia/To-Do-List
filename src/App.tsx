@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import './App.scss';
@@ -27,7 +28,9 @@ const App = () => {
       toast.success('Tarefa adicionada com sucesso!');
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.message);
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message || 'Ocorreu um erro ao adicionar a tarefa!');
+      }
     }
   }
 
