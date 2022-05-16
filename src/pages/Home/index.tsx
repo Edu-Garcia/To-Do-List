@@ -1,14 +1,14 @@
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import './App.scss';
-import { Button } from './components/Button';
-import { Form } from "./components/Form";
-import { List } from './components/List';
-import { ITask } from './interfaces/ITask';
-import TodoService from './services/todo.service';
+import './styles.scss';
+import { Button } from '../../components/Button';
+import { Form } from "../../components/Form";
+import { List } from '../../components/List';
+import { ITask } from '../../interfaces/ITask';
+import TodoService from '../../services/todo.service';
 
-const App = () => {
+export const Home = () => {
 
   const [tasks, setTasks] = useState<ITask[]>([]);
 
@@ -143,5 +143,3 @@ const App = () => {
     </div>
   );
 }
-
-export default App;
