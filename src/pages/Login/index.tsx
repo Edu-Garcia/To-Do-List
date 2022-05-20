@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
+import { useAuth } from "../../contexts/AuthContext/useAuth";
 import './styles.scss'
 
 export const Login = () => {
@@ -7,10 +9,18 @@ export const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { signIn } = useAuth()
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+
+    const token = await signIn(email, password);
+
+    if (token) {
+      console.log(token);
+      navigate('/home');
+    }
   }
 
   return (

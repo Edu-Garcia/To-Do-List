@@ -16,6 +16,7 @@ export const Form = ({ addTask }: IForm) => {
     title: '',
     description: '',
     complete: false,
+    user: null,
   });
 
   const newTask = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,6 +35,7 @@ export const Form = ({ addTask }: IForm) => {
       title: '',
       description: '',
       complete: false,
+      user: null,
     });
 
     setIsLoading(false);

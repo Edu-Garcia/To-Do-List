@@ -6,24 +6,26 @@ import { Button } from '../../components/Button';
 import { Form } from "../../components/Form";
 import { List } from '../../components/List';
 import { ITask } from '../../interfaces/ITask';
-import TodoService from '../../services/todo.service';
+import { useAuth } from '../../contexts/AuthContext/useAuth';
+import TaskService from '../../services/task.service';
 
 export const Home = () => {
 
   const [tasks, setTasks] = useState<ITask[]>([]);
+  const { token, user, signOut } = useAuth()
 
   useEffect(() => {
-    TodoService.todos()
+    TaskService.tasks(token)
       .then(tasks => setTasks(tasks))
       .catch(err => console.log(err))
-  }, []);
+  }, [token]);
 
   const [pendingFilter, setPendantFilter] = useState<boolean>(false);
   const [completeFilter, setCompleteFilter] = useState<boolean>(false);
 
   const addTask = async (title: string, description: string) => {
     try {
-      const data = await TodoService.create(title, description);
+      const data = await TaskService.create(token, title, description);
       setTasks(tasks => [...tasks, data]);
       toast.success('Tarefa adicionada com sucesso!');
     } catch (error: any) {
@@ -36,7 +38,7 @@ export const Home = () => {
 
   const completeTask = async (completeTask: ITask) => {
     try {
-      const status = await TodoService.complete(completeTask.id)
+      const status = await TaskService.complete(token, completeTask.id)
 
       if (status === 200) {
         setTasks(tasks => tasks.map(task => ({
@@ -52,7 +54,7 @@ export const Home = () => {
 
   const deleteTask = async (deletedTask: ITask) => {
     try {
-      const { data, status } = await TodoService.delete(deletedTask.id)
+      const { data, status } = await TaskService.delete(token, deletedTask.id)
 
       console.log(data);
 
@@ -64,12 +66,11 @@ export const Home = () => {
       console.log(error);
       toast.error('Ocorreu um erro ao excluir a tarefa!');
     }
-
   }
 
   const deleteAll = async () => {
     try {
-      const { data, status } = await TodoService.deleteAll()
+      const { data, status } = await TaskService.deleteAll(token)
 
       console.log(data);
 
@@ -92,6 +93,15 @@ export const Home = () => {
         </div>
       </div>
       <div className="tasksContainer">
+        <div className='tasksHeader'>
+          <h2>Bem vindo {user.name}!</h2>
+          <Button
+            className="delete"
+            onClick={() => signOut()}
+          >
+            Encerrar sessão
+          </Button>
+        </div>
         <h2>Lista de tarefas</h2>
         <div className="buttonsContainer">
           <Button

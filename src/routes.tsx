@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { isAuthenticated } from './auth';
+import { useAuth } from './contexts/AuthContext/useAuth';
 
 interface IPrivateRouteProps {
   children: JSX.Element;
@@ -10,7 +10,9 @@ interface IPrivateRouteProps {
 }
 
 const PrivateRoute = ({ children, redirectTo }: IPrivateRouteProps) => {
-  return isAuthenticated() ? children : <Navigate to={redirectTo} />;
+  const { signed } = useAuth();
+
+  return signed ? children : <Navigate to={redirectTo} />;
 }
 
 export const AppRoutes = () => {

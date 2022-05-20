@@ -1,5 +1,9 @@
+import { AxiosError } from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Button } from "../../components/Button";
+import UserService from "../../services/user.service";
 import './styles.scss'
 
 export const Register = () => {
@@ -7,11 +11,22 @@ export const Register = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(name, email, password, confirmPassword);
+
+    try {
+      await UserService.create(name, email, password)
+      navigate('/');
+      toast.success('Usuário cadastrado!');
+    } catch (error) {
+      console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message || 'Ocorreu um erro ao adicionar a tarefa!');
+      }
+    }
   }
 
   return (
@@ -54,24 +69,7 @@ export const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="input-container">
-            <label htmlFor="password">Confirmar Senha</label>
-            <input
-              type="password"
-              name="confirm-password"
-              id="confirm-password"
-              placeholder="Informe novamente sua senha"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <Button
-            type="submit"
-          // disabled={isLoading}
-          >
-            {/* {!isLoading ? 'Enviar' : 'Carregando...'} */}
-            Entrar
-          </Button>
+          <Button type="submit">Entrar</Button>
         </div>
         <p className="registerText">
           Já possui conta? <a href="/">Login</a>
