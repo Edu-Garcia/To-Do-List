@@ -68,6 +68,26 @@ export const Home = () => {
     }
   }
 
+  const editTask = async ({ id, title, description }: ITask) => {
+    try {
+      const { data, status } = await TaskService.update(token, id, title, description)
+
+      console.log(data)
+
+      if (status === 200) {
+        setTasks(tasks => tasks.map(task => ({
+          ...task,
+          title: task.id === id ? title : task.title,
+          description: task.id === id ? description : task.description
+        })))
+        toast.success('Tarefa editada com sucesso!');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Ocorreu um erro ao editar a tarefa!');
+    }
+  }
+
   const deleteAll = async () => {
     try {
       const { data, status } = await TaskService.deleteAll(token)
@@ -145,6 +165,7 @@ export const Home = () => {
             tasks={tasks}
             completeTask={completeTask}
             deleteTask={deleteTask}
+            editTask={editTask}
             pendingFilter={pendingFilter}
             completeFilter={completeFilter}
           />

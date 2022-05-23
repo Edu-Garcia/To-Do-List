@@ -5,6 +5,7 @@ import { Button } from '../../Button';
 interface PropsTask extends ITask {
   completeTask: (task: ITask) => void;
   deleteTask: (task: ITask) => void;
+  editTask: (task: ITask) => void;
 }
 
 export const Task = (props: PropsTask) => {
@@ -13,7 +14,8 @@ export const Task = (props: PropsTask) => {
     description,
     complete,
     completeTask,
-    deleteTask
+    deleteTask,
+    editTask
   } = props;
 
   return (
@@ -27,6 +29,7 @@ export const Task = (props: PropsTask) => {
           <Button onClick={() => completeTask(props)}>Concluir</Button>
         </>
       )}
+      <Button className="edit" onClick={() => editTask(props)}>Editar</Button>
       <Button className="delete" onClick={() => deleteTask(props)}>Excluir</Button>
     </li>
   );
