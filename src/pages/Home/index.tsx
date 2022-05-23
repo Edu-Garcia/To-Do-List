@@ -54,9 +54,7 @@ export const Home = () => {
 
   const deleteTask = async (deletedTask: ITask) => {
     try {
-      const { data, status } = await TaskService.delete(token, deletedTask.id)
-
-      console.log(data);
+      const { status } = await TaskService.delete(token, deletedTask.id)
 
       if (status === 200) {
         setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id))
@@ -70,9 +68,7 @@ export const Home = () => {
 
   const editTask = async ({ id, title, description }: ITask) => {
     try {
-      const { data, status } = await TaskService.update(token, id, title, description)
-
-      console.log(data)
+      const { status } = await TaskService.update(token, id, title, description)
 
       if (status === 200) {
         setTasks(tasks => tasks.map(task => ({
@@ -90,9 +86,7 @@ export const Home = () => {
 
   const deleteAll = async () => {
     try {
-      const { data, status } = await TaskService.deleteAll(token)
-
-      console.log(data);
+      const { status } = await TaskService.deleteAll(token)
 
       if (status === 200) {
         setTasks([]);

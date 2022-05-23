@@ -18,7 +18,6 @@ export const Login = () => {
     const token = await signIn(email, password);
 
     if (token) {
-      console.log(token);
       navigate('/home');
     }
   }
