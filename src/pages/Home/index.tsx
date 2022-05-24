@@ -15,7 +15,7 @@ export const Home = () => {
   const { token, user, signOut } = useAuth()
 
   useEffect(() => {
-    TaskService.tasks(token)
+    TaskService.tasks()
       .then(tasks => setTasks(tasks))
       .catch(err => console.log(err))
   }, [token]);
@@ -25,7 +25,7 @@ export const Home = () => {
 
   const addTask = async (title: string, description: string) => {
     try {
-      const data = await TaskService.create(token, title, description);
+      const data = await TaskService.create(title, description);
       setTasks(tasks => [...tasks, data]);
       toast.success('Tarefa adicionada com sucesso!');
     } catch (error: any) {
@@ -38,7 +38,7 @@ export const Home = () => {
 
   const completeTask = async (completeTask: ITask) => {
     try {
-      const status = await TaskService.complete(token, completeTask.id)
+      const status = await TaskService.complete(completeTask.id)
 
       if (status === 200) {
         setTasks(tasks => tasks.map(task => ({
@@ -54,7 +54,7 @@ export const Home = () => {
 
   const deleteTask = async (deletedTask: ITask) => {
     try {
-      const { status } = await TaskService.delete(token, deletedTask.id)
+      const { status } = await TaskService.delete(deletedTask.id)
 
       if (status === 200) {
         setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id))
@@ -68,7 +68,7 @@ export const Home = () => {
 
   const editTask = async ({ id, title, description }: ITask) => {
     try {
-      const { status } = await TaskService.update(token, id, title, description)
+      const { status } = await TaskService.update(id, title, description)
 
       if (status === 200) {
         setTasks(tasks => tasks.map(task => ({
@@ -86,7 +86,7 @@ export const Home = () => {
 
   const deleteAll = async () => {
     try {
-      const { status } = await TaskService.deleteAll(token)
+      const { status } = await TaskService.deleteAll()
 
       if (status === 200) {
         setTasks([]);

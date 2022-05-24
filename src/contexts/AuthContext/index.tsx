@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import { IAuthContext, IAuthProvider, IContextUser } from "./types";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
@@ -9,6 +9,14 @@ export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 export const AuthProvider = ({ children }: IAuthProvider) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<IContextUser>({} as IContextUser);
+
+  useEffect(() => {
+    const userToken = localStorage.getItem("userToken");
+
+    if (userToken) {
+      setToken(userToken);
+    }
+  }, [])
 
   const signOut = () => {
     setToken(null);
