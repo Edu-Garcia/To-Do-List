@@ -25,9 +25,7 @@ export const Task = (props: PropsTask) => {
         <span>{description}</span>
       </div>
       {!complete && (
-        <>
-          <Button onClick={() => completeTask(props)}>Concluir</Button>
-        </>
+        <Button onClick={() => completeTask(props)}>Concluir</Button>
       )}
       <Button className="edit" onClick={() => editTask(props)}>Editar</Button>
       <Button className="delete" onClick={() => deleteTask(props)}>Excluir</Button>

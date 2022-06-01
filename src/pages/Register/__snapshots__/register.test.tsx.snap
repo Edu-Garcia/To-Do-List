@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register Tests snapshot test register page 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <form>
+      <h1>
+        Cadastro
+      </h1>
+      <div
+        class="form-group"
+      >
+        <div
+          class="input-container"
+        >
+          <label
+            for="name"
+          >
+            Nome
+          </label>
+          <input
+            id="name"
+            name="name"
+            placeholder="Informe seu nome"
+            required=""
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="input-container"
+        >
+          <label
+            for="email"
+          >
+            E-mail
+          </label>
+          <input
+            id="email"
+            name="email"
+            placeholder="Informe seu e-mail"
+            required=""
+            type="email"
+            value=""
+          />
+        </div>
+        <div
+          class="input-container"
+        >
+          <label
+            for="password"
+          >
+            Senha
+          </label>
+          <input
+            id="password"
+            name="password"
+            placeholder="Informe sua senha"
+            type="password"
+            value=""
+          />
+        </div>
+        <button
+          class="button undefined"
+          type="submit"
+        >
+          Entrar
+        </button>
+      </div>
+      <p
+        class="registerText"
+      >
+        Já possui conta? 
+        <a
+          href="/"
+        >
+          Login
+        </a>
+      </p>
+    </form>
+  </div>
+</div>
+`;

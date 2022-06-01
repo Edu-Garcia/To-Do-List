@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Task Test snapshot test task completed 1`] = `
+<div>
+  <li
+    class="selectedTask"
+  >
+    <div
+      class="textContainer"
+    >
+      <h3>
+        Tarefa 1
+      </h3>
+      <span>
+        Descrição da tarefa 1
+      </span>
+    </div>
+    <button
+      class="button edit"
+      type="button"
+    >
+      Editar
+    </button>
+    <button
+      class="button delete"
+      type="button"
+    >
+      Excluir
+    </button>
+  </li>
+</div>
+`;
+
+exports[`Task Test snapshot test task uncompleted 1`] = `
+<div>
+  <li
+    class=""
+  >
+    <div
+      class="textContainer"
+    >
+      <h3>
+        Tarefa 1
+      </h3>
+      <span>
+        Descrição da tarefa 1
+      </span>
+    </div>
+    <button
+      class="button undefined"
+      type="button"
+    >
+      Concluir
+    </button>
+    <button
+      class="button edit"
+      type="button"
+    >
+      Editar
+    </button>
+    <button
+      class="button delete"
+      type="button"
+    >
+      Excluir
+    </button>
+  </li>
+</div>
+`;

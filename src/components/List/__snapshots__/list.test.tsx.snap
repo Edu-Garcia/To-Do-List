@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List Tasks Tests if you do not have any item in the list, show a text informing 1`] = `
+<div>
+  <div
+    class="emptyList"
+  >
+    <h2>
+      Nenhuma tarefa encontrada
+    </h2>
+  </div>
+</div>
+`;
+
+exports[`List Tasks Tests if you have an item in the list, show the list 1`] = `
+<div>
+  <ul>
+    <li
+      class=""
+    >
+      <div
+        class="textContainer"
+      >
+        <h3>
+          Tarefa 1
+        </h3>
+        <span>
+          Descrição da tarefa 1
+        </span>
+      </div>
+      <button
+        class="button undefined"
+        type="button"
+      >
+        Concluir
+      </button>
+      <button
+        class="button edit"
+        type="button"
+      >
+        Editar
+      </button>
+      <button
+        class="button delete"
+        type="button"
+      >
+        Excluir
+      </button>
+    </li>
+  </ul>
+</div>
+`;

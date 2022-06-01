@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit form Test snapshot test edit form component 1`] = `
+<div>
+  <form>
+    <div>
+      <label
+        for="title"
+      >
+        Título
+      </label>
+      <input
+        id="title"
+        name="title"
+        placeholder="Adicione um título"
+        required=""
+        type="text"
+        value="Tarefa 1"
+      />
+    </div>
+    <div>
+      <label
+        for="description"
+      >
+        Descrição
+      </label>
+      <input
+        id="description"
+        name="description"
+        placeholder="Adicione uma descrição"
+        type="text"
+        value="Descrição da tarefa 1"
+      />
+    </div>
+    <div
+      class="buttonsContainer"
+      style="flex-direction: row;"
+    >
+      <button
+        class="button undefined"
+        type="button"
+      >
+        Cancelar
+      </button>
+      <button
+        class="button edit"
+        type="submit"
+      >
+        Alterar
+      </button>
+    </div>
+  </form>
+</div>
+`;

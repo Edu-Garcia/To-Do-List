@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Test snapshot test home page 1`] = `
+<div>
+  <div
+    class="App"
+  >
+    <div
+      class="formContainer"
+    >
+      <div>
+        <h2>
+          Adicione uma nova tarefa
+        </h2>
+        <form>
+          <div>
+            <label
+              for="title"
+            >
+              Título
+            </label>
+            <input
+              id="title"
+              name="title"
+              placeholder="Adicione um título"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div>
+            <label
+              for="description"
+            >
+              Descrição
+            </label>
+            <input
+              id="description"
+              name="description"
+              placeholder="Adicione uma descrição"
+              type="text"
+              value=""
+            />
+          </div>
+          <button
+            class="button undefined"
+            type="submit"
+          >
+            Enviar
+          </button>
+        </form>
+      </div>
+    </div>
+    <div
+      class="tasksContainer"
+    >
+      <div
+        class="tasksHeader"
+      >
+        <h2>
+          Bem vindo!
+        </h2>
+        <button
+          class="button delete"
+          type="button"
+        >
+          Encerrar sessão
+        </button>
+      </div>
+      <h2>
+        Lista de tarefas
+      </h2>
+      <div
+        class="buttonsContainer"
+      >
+        <button
+          class="button filter"
+          type="button"
+        >
+          Filtrar Pendentes
+        </button>
+        <button
+          class="button filter"
+          type="button"
+        >
+          Filtrar Concluídas
+        </button>
+        <button
+          class="button delete"
+          type="button"
+        >
+          Excluir todas
+        </button>
+      </div>
+      <div
+        class="quantityContainer"
+      >
+        <p>
+          <strong>
+            Total:
+          </strong>
+           
+          0
+        </p>
+        <p>
+          <strong>
+            Pendentes:
+          </strong>
+           
+          0
+        </p>
+        <p>
+          <strong>
+            Concluídas:
+          </strong>
+           
+          0
+        </p>
+      </div>
+      <div
+        class="list"
+      >
+        <div
+          class="emptyList"
+        >
+          <h2>
+            Nenhuma tarefa encontrada
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

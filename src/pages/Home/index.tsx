@@ -12,20 +12,20 @@ import TaskService from '../../services/task.service';
 export const Home = () => {
 
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const { token, user, signOut } = useAuth()
+  const [pendingFilter, setPendantFilter] = useState<boolean>(false);
+  const [completeFilter, setCompleteFilter] = useState<boolean>(false);
+  const { token, signOut } = useAuth()
 
   useEffect(() => {
-    TaskService.tasks()
+    TaskService.tasks(token)
       .then(tasks => setTasks(tasks))
       .catch(err => console.log(err))
   }, [token]);
 
-  const [pendingFilter, setPendantFilter] = useState<boolean>(false);
-  const [completeFilter, setCompleteFilter] = useState<boolean>(false);
 
   const addTask = async (title: string, description: string) => {
     try {
-      const data = await TaskService.create(title, description);
+      const data = await TaskService.create(token, title, description);
       setTasks(tasks => [...tasks, data]);
       toast.success('Tarefa adicionada com sucesso!');
     } catch (error: any) {
@@ -38,7 +38,7 @@ export const Home = () => {
 
   const completeTask = async (completeTask: ITask) => {
     try {
-      const status = await TaskService.complete(completeTask.id)
+      const status = await TaskService.complete(token, completeTask.id)
 
       if (status === 200) {
         setTasks(tasks => tasks.map(task => ({
@@ -54,7 +54,7 @@ export const Home = () => {
 
   const deleteTask = async (deletedTask: ITask) => {
     try {
-      const { status } = await TaskService.delete(deletedTask.id)
+      const { status } = await TaskService.delete(token, deletedTask.id)
 
       if (status === 200) {
         setTasks(tasks => tasks.filter(task => task.id !== deletedTask.id))
@@ -68,7 +68,7 @@ export const Home = () => {
 
   const editTask = async ({ id, title, description }: ITask) => {
     try {
-      const { status } = await TaskService.update(id, title, description)
+      const { status } = await TaskService.update(token, id, title, description)
 
       if (status === 200) {
         setTasks(tasks => tasks.map(task => ({
@@ -86,7 +86,7 @@ export const Home = () => {
 
   const deleteAll = async () => {
     try {
-      const { status } = await TaskService.deleteAll()
+      const { status } = await TaskService.deleteAll(token)
 
       if (status === 200) {
         setTasks([]);
@@ -108,7 +108,7 @@ export const Home = () => {
       </div>
       <div className="tasksContainer">
         <div className='tasksHeader'>
-          <h2>Bem vindo {user.name}!</h2>
+          <h2>Bem vindo!</h2>
           <Button
             className="delete"
             onClick={() => signOut()}
